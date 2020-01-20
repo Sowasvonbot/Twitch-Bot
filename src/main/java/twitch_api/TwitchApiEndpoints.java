@@ -70,6 +70,11 @@ public abstract class TwitchApiEndpoints {
 
 
     private static Request.Builder templateBuilder(){
+        if (active == 0) init();
+        if (active == -1) {
+            System.err.println("can't send request, twitch module is offline");
+            return null;
+        }
         return new Request.Builder()
                 .addHeader("Client-ID", getTwitchClientId())
                 .addHeader("Accept", "application/vnd.twitchtv.v5+json");
@@ -80,11 +85,6 @@ public abstract class TwitchApiEndpoints {
     }
 
     private static JSONObject sendRequest(Request request){
-        if (active == 0) init();
-        if (active == -1) {
-            System.err.println("can't send request, twitch module is offline");
-            return null;
-        }
         try {
             Response response = Bot.getInstance().getMyJDA().getHttpClient().newCall(request).execute();
             return new JSONObject(response.body().string());
