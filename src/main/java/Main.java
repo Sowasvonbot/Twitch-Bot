@@ -19,7 +19,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Bot.getInstance();
-        FileLoader.getInstance().loadFileFromClasspath("data/token.txt");
         StreamData streamData =  TwitchApiEndpoints.getLiveStreamByUser(TwitchApiEndpoints.getClientID("coonh"));
         System.out.println(streamData);
 
