@@ -8,6 +8,8 @@ import org.json.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public abstract class TwitchApiEndpoints {
 
@@ -23,12 +25,36 @@ public abstract class TwitchApiEndpoints {
 
     }
 
-    public static void getLiveStreamByUser(int userID){
+    public static StreamData getLiveStreamByUser(int userID){
         Request request = templateBuilder()
                 .url("https://api.twitch.tv/kraken/streams/"+ userID)
                 .build();
         JSONObject answer = sendRequest(request);
-        System.out.println(answer.toString());
+        System.out.println(answer);
+        return getStreamDataFromMessage(answer);
+    }
+
+    private static StreamData getStreamDataFromMessage(JSONObject message){
+        if (message.get("stream").equals(null)) return new StreamData(false);
+        StreamData streamData = new StreamData(true);
+        try {
+            JSONObject stream = message.getJSONObject("stream");
+            JSONObject channel = stream.getJSONObject("channel");
+
+            streamData = new StreamData(
+                    true,
+                    new URL(stream.getJSONObject("preview").getString("template")),
+                    stream.getString("game"),
+                    new URL(channel.getString("logo")),
+                    channel.getString("name"),
+                    channel.getString("status")
+                    );
+        } catch (JSONException json){json.printStackTrace();}
+        catch (MalformedURLException malformed){
+            malformed.printStackTrace();
+        }
+
+        return streamData;
     }
 
 
