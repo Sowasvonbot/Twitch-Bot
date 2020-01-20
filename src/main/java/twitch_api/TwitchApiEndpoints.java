@@ -2,6 +2,7 @@ package twitch_api;
 
 
 import bot.Bot;
+import fileManagement.FileLoader;
 import fileManagement.FileStringReader;
 import okhttp3.*;
 import org.json.*;
@@ -13,7 +14,17 @@ import java.net.URL;
 
 public abstract class TwitchApiEndpoints {
 
+    private static int active;
 
+    public static void init(){
+        try {
+            active = 1;
+            FileLoader.getInstance().loadFileFromClasspath("data/twitchClientId.txt");
+        } catch (IOException e) {
+            active = -1;
+            System.err.println("Can't load twitch token");
+        }
+    }
 
     public static int getClientID(String userName){
         Request request = templateBuilder()
@@ -69,6 +80,11 @@ public abstract class TwitchApiEndpoints {
     }
 
     private static JSONObject sendRequest(Request request){
+        if (active == 0) init();
+        if (active == -1) {
+            System.err.println("can't send request, twitch module is offline");
+            return null;
+        }
         try {
             Response response = Bot.getInstance().getMyJDA().getHttpClient().newCall(request).execute();
             return new JSONObject(response.body().string());
