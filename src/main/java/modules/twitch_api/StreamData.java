@@ -1,4 +1,5 @@
-package twitch_api;
+package modules.twitch_api;
+
 
 import java.net.URL;
 

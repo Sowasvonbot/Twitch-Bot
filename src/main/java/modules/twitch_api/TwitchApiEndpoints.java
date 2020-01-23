@@ -1,4 +1,4 @@
-package twitch_api;
+package modules.twitch_api;
 
 
 import bot.Bot;
