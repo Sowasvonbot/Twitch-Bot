@@ -21,35 +21,35 @@ public interface ModuleController {
     String getName();
 
     /**
-     * This method will return a list of all PUBLIC methods with the required data. See the class MethodData for an overview of this object
-     * @return A list of methodData with all public methods
+     * This method will return a list of all command with the required data. See the class CommandData for an overview of the return
+     * @return A list of CommandData's with all public methods
      */
-    List<MethodData> getMethods();
+    List<CommandData> getCommands();
 
     /**
-     * First you have to get all method names via getMethods and then you are able to execute one of them with this method
-     * @param method The method to be executed as String
+     * First you have to get all commands names via getCommands and then you are able to execute one of them with this method
+     * @param command The command to be executed as String
      * @return The return value specified in getMethods
-     * @param inputs All required inputs for the given method, null will be accepted if no inputs are required
+     * @param args All required inputs for the given command, null will be accepted if no inputs are required
      */
-    <T> T executeMethod(@Nonnull String method, List<?> inputs);
+    <T> T executeCommand(@Nonnull String command, String[] args);
 
     /**
-     * Basically the same like executeMethod, but the return is a CompletableFuture to be executed with a thread pool of your choice. The return type is also described in getMethods()
-     * @param method The method to be executed as String
-     * @param inputs All required inputs for the given method, null will be accepted if no inputs are required
-     * @return The CompletableFuture with matching dataType of getMethods()
+     * Basically the same like executeCommand, but the return is a CompletableFuture to be executed with a thread pool of your choice. The return type is also described in getCommands()
+     * @param command The method to be executed as String
+     * @param args All required inputs for the given command, null will be accepted if no inputs are required
+     * @return The CompletableFuture with matching dataType of getCommands()
      */
-    CompletableFuture<?>  executeMethodAsync(@Nonnull String method, List<?> inputs);
+    CompletableFuture<?>  executeCommandAsync(@Nonnull String command, String[] args);
 
     /**
      * Another method to execute a given method. But this time you are able to give it a matching consumer. With this consumer you are able to handle the return instant
      * @param consumer The consumer, must match the return type of the function
-     * @param method The method to be executed as String
-     * @param inputs All required inputs for the given method, null will be accepted if no inputs are required
+     * @param command The command to be executed as String
+     * @param args All required inputs for the given command, null will be accepted if no inputs are required
      * @return True, when consumer is matching and no other errors occurred
      */
-    Boolean executeMethodWithConsumer(@Nonnull Consumer<?> consumer,@Nonnull String method, List<?> inputs);
+    Boolean executeMethodWithConsumer(@Nonnull Consumer<?> consumer,@Nonnull String command, String args);
 
 
     /**

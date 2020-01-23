@@ -1,0 +1,54 @@
+package modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+public class CommandData {
+
+    private String name;
+    private HashMap<String,String> values;
+    private returnValues returnValue;
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public returnValues getReturnValue() {
+        return returnValue;
+    }
+
+    public HashMap<String, String> getValues() {
+        return values;
+    }
+
+    public void setValues(HashMap<String, String> values) {
+        this.values = values;
+    }
+
+    public void setReturnValue(returnValues returnValue) {
+        this.returnValue = returnValue;
+    }
+
+
+
+    /**
+     * Set the name of the command, all parameters(values) and the returnValue from the enumList returnValues e.g. returnValues.INT for example
+     * @param name name of the command
+     * @param values HashMap of first Value, then Description
+     * @param returnValue The possible return, e.g for the twitch api a valid client id
+     */
+    public CommandData(String name, HashMap<String, String> values, returnValues returnValue) {
+        this.name = name;
+        this.values = values;
+        this.returnValue = returnValue;
+    }
+
+    public enum returnValues{
+        INT, STRING, FUTURE, LONG, BOOLEAN
+    }
+}
