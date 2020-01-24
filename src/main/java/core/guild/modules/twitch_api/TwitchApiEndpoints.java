@@ -1,13 +1,13 @@
-package modules.twitch_api;
+package core.guild.modules.twitch_api;
 
 
-import bot.Bot;
+import botcore.Bot;
+import core.guild.modules.twitch_api.livestream.StreamData;
 import fileManagement.FileLoader;
 import fileManagement.FileStringReader;
 import okhttp3.*;
 import org.json.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package modules;
+package core.guild.modules;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.function.Consumer;
  * Import this interface if you make a new modul
  * It is higly recommend to use this interface, so all modules controllers are able to be easily loaded
  */
-public interface ModuleController {
+public interface CommandController {
 
 
     /**
@@ -49,7 +49,7 @@ public interface ModuleController {
      * @param args All required inputs for the given command, null will be accepted if no inputs are required
      * @return True, when consumer is matching and no other errors occurred
      */
-    Boolean executeMethodWithConsumer(@Nonnull Consumer<?> consumer,@Nonnull String command, String args);
+    Boolean executeCommandWithConsumer(@Nonnull Consumer<?> consumer,@Nonnull String command, String args);
 
 
     /**
@@ -72,7 +72,6 @@ public interface ModuleController {
      * @return The response, maybe variable not found or value not accepted on failure, SUCCESS when successful
      */
     String setConfigVariable(String variable, String value);
-
 
 
 }

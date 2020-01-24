@@ -1,16 +1,9 @@
-import bot.Bot;
-import fileManagement.FileLoader;
-import fileManagement.FileStringReader;
-import org.json.JSONObject;
-import twitch_api.StreamData;
-import twitch_api.TwitchApiEndpoints;
+import botcore.Bot;
+import core.guild.modules.twitch_api.TwitchApiEndpoints;
+import core.guild.modules.twitch_api.livestream.StreamData;
 
-import javax.imageio.IIOException;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Scanner;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

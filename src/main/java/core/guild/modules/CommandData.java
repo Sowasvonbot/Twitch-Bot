@@ -1,4 +1,4 @@
-package modules;
+package core.guild.modules;
 
 import java.util.HashMap;
 import java.util.List;

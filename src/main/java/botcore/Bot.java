@@ -1,4 +1,4 @@
-package bot;
+package botcore;
 
 import fileManagement.FileLoader;
 import fileManagement.FileStringReader;
@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 
 import javax.security.auth.login.LoginException;
-import java.io.File;
 import java.io.IOException;
 
 public class Bot {

@@ -1,4 +1,4 @@
-package modules.twitch_api;
+package core.guild.modules.twitch_api.livestream;
 
 
 import java.net.URL;
