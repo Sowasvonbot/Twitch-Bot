@@ -1,7 +1,7 @@
 # Twitch-Bot
 
 
-Hier entsteht ein kleiner Discord Bot der automatisch überprüfen soll, ob Mitglieder einer Rolle auf einem Server online sind
+Hier entsteht ein kleiner Discord Bot, welcher automatisch überprüfen soll, ob Mitglieder einer Rolle auf einem Server online sind
 
 
 Projektstruktur:
