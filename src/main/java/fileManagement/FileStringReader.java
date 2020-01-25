@@ -16,7 +16,6 @@ public class FileStringReader {
             result = reader.lines().reduce(String::concat);
             return result.get();
         } catch (Exception e){
-            e.printStackTrace();
             return "ERROR";
         }
     }

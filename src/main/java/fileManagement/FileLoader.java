@@ -44,6 +44,26 @@ public class FileLoader {
 
     }
 
+    public File createDir(String filepath){
+        File newFile;
+        URL fileURL = getClass().getResource(filepath);
+        try {
+            newFile = new File(fileURL.getPath());
+            return newFile;
+        } catch (NullPointerException nullPointer){
+            newFile = new File(this.filepath + File.separator + filepath);
+            if (newFile.isDirectory()) {
+                newFile.mkdir();
+                return newFile;
+            }
+            else {
+                newFile.mkdirs();
+                return newFile;
+            }
+
+        }
+    }
+
     public File getFileContainsName(String name){
         for (Map.Entry<String, File> entry:myFiles.entrySet()) {
             if (entry.getKey().contains(name)){

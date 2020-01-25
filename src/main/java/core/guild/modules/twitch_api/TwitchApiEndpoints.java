@@ -86,7 +86,7 @@ public abstract class TwitchApiEndpoints {
 
     private static JSONObject sendRequest(Request request){
         try {
-            Response response = Bot.getInstance().getMyJDA().getHttpClient().newCall(request).execute();
+            Response response = Bot.getHTTPClient().newCall(request).execute();
             return new JSONObject(response.body().string());
         } catch (IOException e) {
             e.printStackTrace();

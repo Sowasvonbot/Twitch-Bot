@@ -1,4 +1,5 @@
 import botcore.Bot;
+import core.GuildHandler;
 import core.guild.modules.twitch_api.TwitchApiEndpoints;
 import core.guild.modules.twitch_api.livestream.StreamData;
 
@@ -11,9 +12,10 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-        Bot.getInstance();
-        StreamData streamData =  TwitchApiEndpoints.getLiveStreamByUser(TwitchApiEndpoints.getClientID("coonh"));
+        StreamData streamData =  TwitchApiEndpoints.getLiveStreamByUser(TwitchApiEndpoints.getClientID("lec"));
         System.out.println(streamData);
+
+        new GuildHandler();
 
         setupScanner();
     }
@@ -30,7 +32,7 @@ public class Main {
                     case "quit":
                     case "stop":
                     case "exit":
-                        Bot.getInstance().getMyJDA().shutdownNow();
+                        Bot.shutdown();
                         System.exit(0);
                     default:
                         System.out.println("Don't know: " + line);
