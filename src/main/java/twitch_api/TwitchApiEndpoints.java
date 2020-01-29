@@ -45,7 +45,7 @@ public abstract class TwitchApiEndpoints {
                 .url("https://api.twitch.tv/kraken/streams/"+ userID)
                 .build();
         JSONObject answer = sendRequest(request);
-        logger.info(answer.toString());
+        //logger.info(answer.toString());
         return getStreamDataFromMessage(answer);
     }
 
@@ -62,7 +62,8 @@ public abstract class TwitchApiEndpoints {
                     stream.getString("game"),
                     new URL(channel.getString("logo")),
                     channel.getString("name"),
-                    channel.getString("status")
+                    channel.getString("status"),
+                    new URL(channel.getString("url"))
                     );
         } catch (JSONException json){json.printStackTrace();}
         catch (MalformedURLException malformed){

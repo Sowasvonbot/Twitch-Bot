@@ -49,8 +49,9 @@ public class CommandController implements core.guild.modules.CommandController {
                         int clientId = TwitchApiEndpoints.getClientID(args[0]);
                         StreamData data = TwitchApiEndpoints.getLiveStreamByUser(clientId);
                         if (data.isOnline()) return new EmbedWithPicture(
-                                new MyEmbedBuilder().setDescription(data.toString()),
-                                data.getPictureURL());
+                                new MyEmbedBuilder().setDescription(data.toString() + " " +data.getStreamLink().toString()).setTitle(data.getStreamerName(), data.getStreamLink().toString()),
+                                data.getPictureURL(),
+                                data.getLogo());
                         else return data.toString();
 
                 } else{
