@@ -6,6 +6,8 @@ import core.guild.modules.CommandController;
 import core.guild.modules.commands.Executor;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -18,6 +20,7 @@ public class CommandListener extends ListenerAdapter {
 
     private long myGuildID;
     private Map<String, Executor> executorList;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public CommandListener(long myGuildID, HashMap<String, Executor> executorList) {
         super();
@@ -33,7 +36,10 @@ public class CommandListener extends ListenerAdapter {
 
 
         String messageContent = event.getMessage().getContentRaw();
-        System.out.println("Incoming message: " + messageContent);
+
+        logger.debug("Incoming message {}", messageContent);
+
+
         String[] parameters = messageContent.split(" ");
         if (parameters.length == 0) return;
         if (parameters[0].contains("config")){

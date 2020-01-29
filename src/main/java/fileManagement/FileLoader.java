@@ -1,5 +1,8 @@
 package fileManagement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -11,7 +14,7 @@ public class FileLoader {
     private static FileLoader instance;
     private HashMap<String, File> myFiles;
     private final String filepath = System.getProperty("user.dir");
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private FileLoader(){
         myFiles = new HashMap<>();
@@ -23,7 +26,7 @@ public class FileLoader {
             try {
                 if (tempFile.isFile()) loadFileFromClasspath("data" + File.separator + tempFile.getName());
             } catch (IOException e){
-                System.out.println("File " + tempFile.getName() + " does not exist!");
+                logger.warn("File {} does not exist!",tempFile.getName());
             }
         }
     }

@@ -16,7 +16,6 @@ public class GuildHandler {
     private GuildHolder holdedGuilds;
 
     public GuildHandler() {
-        //System.out.println("Starting Guild Handler");
         guildLogger.info("Starting Guild Handler");
         holdedGuilds = new GuildHolder(Bot.getActiveGuilds());
         holdedGuilds.getGuilds().forEach((guild -> initGuild(guild)));
@@ -26,7 +25,6 @@ public class GuildHandler {
 
 
     private void initGuild(Guild guild){
-        //System.out.println("Guild " + guild.getName() + " is loading");
         guildLogger.info("Guild {} is loading",guild.getName());
         String path = File.separator +"data"+ File.separator + guild.getName();
         FileLoader.getInstance().createDir(path);
@@ -39,7 +37,6 @@ public class GuildHandler {
 
 
         guildLogger.info("Guild {} loaded",guild.getName());
-        //System.out.println("Guild " + guild.getName() + " loaded");
     }
 
 
@@ -48,9 +45,9 @@ public class GuildHandler {
         int i = 0;
         for (Guild guild:holdedGuilds.getGuilds()) {
             if ((i = guild.getModuleController().shutdown()) != 0){
-                System.out.println("Shutting down Guild: " + guild.getName());
+                guildLogger.info("Shutting down Guild {}", guild.getName());
                 exitcode = i;
-                System.out.println("Guild " +  guild.getName() + " couldn't stop properly. Exitcode: " + i);
+                guildLogger.info("Guild {} couldn't stop properly. Exitcode: {}", guild.getName(),i);
             }
         }
 

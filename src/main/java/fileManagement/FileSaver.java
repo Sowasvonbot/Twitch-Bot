@@ -1,5 +1,8 @@
 package fileManagement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -9,11 +12,12 @@ public class FileSaver {
 
 
     private static FileSaver instance;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
 
     public boolean saveContentToFile(String filename, String content){
-        System.out.println("FileSaver: Writing content to file "+ filename);
+        logger.info("FileSaver: Writing content to file {}", filename);
         BufferedWriter writer = getWriter(filename);
         if (writer == null) return false;
         try {
@@ -37,7 +41,7 @@ public class FileSaver {
             ));
 
         } catch (IOException e){
-            System.err.println("File: " + fileName + " couldn't be found. (Caller: getWriter, Filesaver");
+            logger.error("File: {} couldn't be found.", fileName);
             return null;
         }
 

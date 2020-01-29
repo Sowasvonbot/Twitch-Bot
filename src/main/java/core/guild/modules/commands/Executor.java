@@ -14,6 +14,7 @@ public class Executor {
     public Executor(CommandController commandController){
         executorService = Executors.newSingleThreadExecutor();
         this.commandController = commandController;
+        commandHolder = new CommandHolder();
 
     }
 

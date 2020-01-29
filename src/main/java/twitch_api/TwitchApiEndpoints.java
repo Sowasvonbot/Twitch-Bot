@@ -2,6 +2,8 @@ package twitch_api;
 
 
 import botcore.Bot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import twitch_api.livestream.StreamData;
 import fileManagement.FileLoader;
 import fileManagement.FileStringReader;
@@ -15,6 +17,7 @@ import java.net.URL;
 public abstract class TwitchApiEndpoints {
 
     private static int active;
+    private final static Logger logger = LoggerFactory.getLogger("TwitchApiEndpoints");
 
     public static void init(){
         try {
@@ -22,7 +25,7 @@ public abstract class TwitchApiEndpoints {
             FileLoader.getInstance().loadFileFromClasspath("data/twitchClientId.txt");
         } catch (IOException e) {
             active = -1;
-            System.err.println("Can't load twitch token");
+            logger.error("Can't load Twitch token");
         }
     }
 
@@ -41,7 +44,7 @@ public abstract class TwitchApiEndpoints {
                 .url("https://api.twitch.tv/kraken/streams/"+ userID)
                 .build();
         JSONObject answer = sendRequest(request);
-        System.out.println(answer);
+        logger.info(answer.toString());
         return getStreamDataFromMessage(answer);
     }
 
@@ -72,7 +75,7 @@ public abstract class TwitchApiEndpoints {
     private static Request.Builder templateBuilder(){
         if (active == 0) init();
         if (active == -1) {
-            System.err.println("can't send request, twitch module is offline");
+            logger.error("can't send request, twitch module is offline");
             return null;
         }
         return new Request.Builder()
