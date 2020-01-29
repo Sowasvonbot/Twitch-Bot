@@ -1,7 +1,9 @@
 package core;
 
 import botcore.Bot;
+import core.guild.CommandListener;
 import core.guild.ModuleController;
+import core.guild.ModuleHolder;
 import fileManagement.FileLoader;
 
 import java.io.File;
@@ -23,7 +25,9 @@ public class GuildHandler {
         System.out.println("Guild " + guild.getName() + " is loading");
         String path = File.separator +"data"+ File.separator + guild.getName();
         FileLoader.getInstance().createDir(path);
-        guild.setModuleController(new ModuleController(path));
+        ModuleHolder moduleHolder = new ModuleHolder();
+        guild.setModuleController(new ModuleController(path,moduleHolder));
+        new CommandListener(guild.getGuildID(),moduleHolder);
         System.out.println("Guild " + guild.getName() + " loaded");
     }
 

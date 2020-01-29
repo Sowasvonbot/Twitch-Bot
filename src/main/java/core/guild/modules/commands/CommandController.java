@@ -1,4 +1,4 @@
-package core.guild.commands;
+package core.guild.modules.commands;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -1,7 +1,6 @@
-package core.guild.commands;
+package core.guild.modules.commands;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Command {
 

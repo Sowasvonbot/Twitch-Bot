@@ -1,6 +1,6 @@
 package core.guild.modules;
 
-import core.guild.commands.Command;
+import core.guild.modules.commands.Command;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;

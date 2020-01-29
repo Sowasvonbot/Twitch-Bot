@@ -69,8 +69,8 @@ public class Bot {
         return guilds;
     }
 
-    public void addListener(ListenerAdapter myListenerAdapter ){
-        myJDA.addEventListener(myListenerAdapter);
+    public static void addListener(ListenerAdapter myListenerAdapter ){
+        getInstance().getMyJDA().addEventListener(myListenerAdapter);
     }
 
 

@@ -14,12 +14,10 @@ public class ModuleController {
     private ModuleHolder moduleHolder;
     private String filepath;
 
-    public ModuleController(String filepath) {
+    public ModuleController(String filepath, ModuleHolder moduleHolder) {
         this.filepath = filepath;
 
-
-
-        moduleHolder = new ModuleHolder();
+        this.moduleHolder = moduleHolder;
         //TODO Add modules here
 
         moduleHolder.addModule(new Module(null,null, "Twitch", getActiveStatus("Twitch")));

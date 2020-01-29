@@ -1,4 +1,4 @@
-package core.guild.configs;
+package core.guild.modules.configs;
 
 public class ConfigParameterHolder {
 }
