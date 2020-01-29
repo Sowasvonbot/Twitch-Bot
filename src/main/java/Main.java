@@ -11,18 +11,19 @@ import java.util.concurrent.Executors;
 public class Main {
 
 
+
     public static void main(String[] args) throws IOException {
         StreamData streamData =  TwitchApiEndpoints.getLiveStreamByUser(TwitchApiEndpoints.getClientID("lec"));
         System.out.println(streamData);
 
-        new GuildHandler();
+        GuildHandler guildHandler =  new GuildHandler();
 
-        setupScanner();
+        setupScanner(guildHandler);
     }
 
 
 
-    private static void setupScanner(){
+    private static void setupScanner(GuildHandler guildHandler){
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(() ->{
             String line;
@@ -33,7 +34,8 @@ public class Main {
                     case "stop":
                     case "exit":
                         Bot.shutdown();
-                        System.exit(0);
+                        int exitCode = guildHandler.shutdown();
+                        System.exit(exitCode);
                     default:
                         System.out.println("Don't know: " + line);
                 }

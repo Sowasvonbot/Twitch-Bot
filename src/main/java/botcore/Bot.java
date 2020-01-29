@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import okhttp3.OkHttpClient;
 
 import javax.security.auth.login.LoginException;
@@ -66,6 +67,10 @@ public class Bot {
             ));
         });
         return guilds;
+    }
+
+    public void addListener(ListenerAdapter myListenerAdapter ){
+        myJDA.addEventListener(myListenerAdapter);
     }
 
 

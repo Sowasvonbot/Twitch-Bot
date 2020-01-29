@@ -1,9 +1,9 @@
-package core.guild.modules;
+package core.guild.commands;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class CommandData {
+public class Command {
 
     private String name;
     private HashMap<String,String> values;
@@ -42,7 +42,7 @@ public class CommandData {
      * @param values HashMap of first Value, then Description
      * @param returnValue The possible return, e.g for the twitch api a valid client id
      */
-    public CommandData(String name, HashMap<String, String> values, returnValues returnValue) {
+    public Command(String name, HashMap<String, String> values, returnValues returnValue) {
         this.name = name;
         this.values = values;
         this.returnValue = returnValue;

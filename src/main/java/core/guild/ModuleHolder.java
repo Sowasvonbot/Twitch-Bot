@@ -16,4 +16,8 @@ public class ModuleHolder {
         moduleList.add(module);
         return module;
     }
+
+    public List<Module> getModuleList() {
+        return moduleList;
+    }
 }

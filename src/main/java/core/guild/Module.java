@@ -3,6 +3,8 @@ package core.guild;
 import core.guild.modules.CommandController;
 import core.guild.modules.MiscModuleData;
 
+import javax.annotation.Nonnull;
+
 public class Module {
 
 
@@ -12,7 +14,7 @@ public class Module {
     private boolean online;
 
 
-    public Module(CommandController controller, MiscModuleData moduleData, String name, Boolean online) {
+    public Module(@Nonnull CommandController controller, @Nonnull MiscModuleData moduleData, String name, Boolean online) {
         this.controller = controller;
         this.moduleData = moduleData;
         this.name = name;

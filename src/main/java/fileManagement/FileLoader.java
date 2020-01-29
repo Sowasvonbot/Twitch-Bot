@@ -39,7 +39,7 @@ public class FileLoader {
             newFile.getParentFile().mkdirs();
             newFile.createNewFile();
         }
-        myFiles.put(name,newFile);
+        myFiles.put(newFile.getPath(),newFile);
         return newFile;
 
     }

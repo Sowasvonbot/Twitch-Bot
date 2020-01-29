@@ -1,5 +1,7 @@
 package core.guild.modules;
 
+import core.guild.commands.Command;
+
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +26,7 @@ public interface CommandController {
      * This method will return a list of all command with the required data. See the class CommandData for an overview of the return
      * @return A list of CommandData's with all public methods
      */
-    List<CommandData> getCommands();
+    List<Command> getCommands();
 
     /**
      * First you have to get all commands names via getCommands and then you are able to execute one of them with this method

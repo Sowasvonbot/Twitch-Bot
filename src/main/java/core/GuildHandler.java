@@ -20,8 +20,25 @@ public class GuildHandler {
 
 
     private void initGuild(Guild guild){
+        System.out.println("Guild " + guild.getName() + " is loading");
         String path = File.separator +"data"+ File.separator + guild.getName();
         FileLoader.getInstance().createDir(path);
         guild.setModuleController(new ModuleController(path));
+        System.out.println("Guild " + guild.getName() + " loaded");
+    }
+
+
+    public int shutdown(){
+        int exitcode = 0;
+        int i = 0;
+        for (Guild guild:holdedGuilds.getGuilds()) {
+            if ((i = guild.getModuleController().shutdown()) != 0){
+                System.out.println("Shutting down Guild: " + guild.getName());
+                exitcode = i;
+                System.out.println("Guild " +  guild.getName() + " couldn't stop properly. Exitcode: " + i);
+            }
+        }
+
+        return exitcode;
     }
 }

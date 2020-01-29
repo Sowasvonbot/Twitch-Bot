@@ -8,11 +8,12 @@ import java.io.IOException;
 public class FileSaver {
 
 
-    private FileSaver instance;
+    private static FileSaver instance;
 
 
 
     public boolean saveContentToFile(String filename, String content){
+        System.out.println("FileSaver: Writing content to file "+ filename);
         BufferedWriter writer = getWriter(filename);
         if (writer == null) return false;
         try {
@@ -43,7 +44,7 @@ public class FileSaver {
     }
 
 
-    public FileSaver getInstance() {
+    public static FileSaver getInstance() {
         if (instance == null) instance = new FileSaver();
         return instance;
     }
