@@ -23,9 +23,11 @@ public class GuildListener extends ListenerAdapter {
 
         String[] parameters = messageContent.split(" ");
         if (parameters.length == 0) return;
-        parameters[0] = parameters[0].replace("!", "");
-        parameters[0] = parameters[0].replace("/", "");
-
+        if (parameters[0].contains("config")){
+            //TODO Here give the content to the config controller
+        } else{
+            //TODO give content to command controller
+        }
 
     }
 }
