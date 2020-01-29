@@ -2,6 +2,8 @@ import botcore.Bot;
 import core.GuildHandler;
 import core.guild.modules.twitch_api.TwitchApiEndpoints;
 import core.guild.modules.twitch_api.livestream.StreamData;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -11,10 +13,10 @@ import java.util.concurrent.Executors;
 public class Main {
 
 
-
     public static void main(String[] args) throws IOException {
-        StreamData streamData =  TwitchApiEndpoints.getLiveStreamByUser(TwitchApiEndpoints.getClientID("lec"));
-        System.out.println(streamData);
+        //StreamData streamData =  TwitchApiEndpoints.getLiveStreamByUser(TwitchApiEndpoints.getClientID("lec"));
+        //System.out.println(streamData);
+
 
         GuildHandler guildHandler =  new GuildHandler();
 

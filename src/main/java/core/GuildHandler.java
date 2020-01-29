@@ -5,15 +5,19 @@ import core.guild.CommandListener;
 import core.guild.ModuleController;
 import core.guild.ModuleHolder;
 import fileManagement.FileLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class GuildHandler {
 
+    private final Logger guildLogger = LoggerFactory.getLogger(GuildHandler.class);
     private GuildHolder holdedGuilds;
 
     public GuildHandler() {
-        System.out.println("Starting Guild Handler");
+        //System.out.println("Starting Guild Handler");
+        guildLogger.info("Starting Guild Handler");
         holdedGuilds = new GuildHolder(Bot.getActiveGuilds());
         holdedGuilds.getGuilds().forEach((guild -> initGuild(guild)));
 
@@ -22,13 +26,15 @@ public class GuildHandler {
 
 
     private void initGuild(Guild guild){
-        System.out.println("Guild " + guild.getName() + " is loading");
+        //System.out.println("Guild " + guild.getName() + " is loading");
+        guildLogger.info("Guild {} is loading",guild.getName());
         String path = File.separator +"data"+ File.separator + guild.getName();
         FileLoader.getInstance().createDir(path);
         ModuleHolder moduleHolder = new ModuleHolder();
         guild.setModuleController(new ModuleController(path,moduleHolder));
         new CommandListener(guild.getGuildID(),moduleHolder);
-        System.out.println("Guild " + guild.getName() + " loaded");
+        guildLogger.info("Guild {} loaded",guild.getName());
+        //System.out.println("Guild " + guild.getName() + " loaded");
     }
 
 
