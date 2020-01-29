@@ -30,6 +30,7 @@ public abstract class TwitchApiEndpoints {
     }
 
     public static int getClientID(String userName){
+        logger.info("Trying to get ClientID for {}", userName);
         Request request = templateBuilder()
                 .url("https://api.twitch.tv/kraken/users?login=" + userName)
                 .build();
@@ -57,7 +58,7 @@ public abstract class TwitchApiEndpoints {
 
             streamData = new StreamData(
                     true,
-                    new URL(stream.getJSONObject("preview").getString("template")),
+                    new URL(stream.getJSONObject("preview").getString("large")),
                     stream.getString("game"),
                     new URL(channel.getString("logo")),
                     channel.getString("name"),

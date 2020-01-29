@@ -47,7 +47,17 @@ public class Command {
         this.returnValue = returnValue;
     }
 
+    @Override
+    public String toString() {
+        String values = "No values";
+
+        if (this.values != null) values = this.values.keySet().toString();
+
+        return "Command:  " + name;
+
+    }
+
     public enum returnValues{
-        INT, STRING, FUTURE, LONG, BOOLEAN
+        INT, STRING, FUTURE, LONG, BOOLEAN, VOID
     }
 }

@@ -61,7 +61,7 @@ public class CommandListener extends ListenerAdapter {
                     args = new String[parameters.length -2];
                     for (int i = 0; i < parameters.length -2; i++) args[i] = parameters[i+2];
                 }
-                executor.executeCommand(parameters[1], args);
+                executor.executeCommand(parameters[1], args, event.getChannel().getIdLong());
             }
 
         }
