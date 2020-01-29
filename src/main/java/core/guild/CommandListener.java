@@ -2,6 +2,7 @@ package core.guild;
 
 import botcore.Bot;
 import botcore.Output;
+import core.GuildHandler;
 import core.guild.modules.CommandController;
 import core.guild.modules.commands.Executor;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -45,6 +46,7 @@ public class CommandListener extends ListenerAdapter {
         if (parameters[0].contains("config")){
             Output.sendMessageToChannel(event.getChannel().getIdLong(), "Da hat jemand config eingegeben");
             //TODO Here give the content to the config controller
+            GuildHandler.saveConfigs(event.getGuild().getIdLong());
         } else{
             //TODO give content to command controller
             Executor executor = executorList.get(parameters[0].toLowerCase());

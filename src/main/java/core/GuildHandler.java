@@ -13,7 +13,7 @@ import java.io.File;
 public class GuildHandler {
 
     private final Logger guildLogger = LoggerFactory.getLogger(GuildHandler.class);
-    private GuildHolder holdedGuilds;
+    private static GuildHolder holdedGuilds;
 
     public GuildHandler() {
         guildLogger.info("Starting Guild Handler");
@@ -44,7 +44,7 @@ public class GuildHandler {
         int exitcode = 0;
         int i = 0;
         for (Guild guild:holdedGuilds.getGuilds()) {
-            if ((i = guild.getModuleController().shutdown()) != 0){
+            if ((i = guild.getModuleController().safeConfig()) != 0){
                 guildLogger.info("Shutting down Guild {}", guild.getName());
                 exitcode = i;
                 guildLogger.info("Guild {} couldn't stop properly. Exitcode: {}", guild.getName(),i);
@@ -52,5 +52,9 @@ public class GuildHandler {
         }
 
         return exitcode;
+    }
+
+    public static void saveConfigs(long id){
+        holdedGuilds.getGuilds().forEach(guild -> guild.getModuleController().safeConfig());
     }
 }

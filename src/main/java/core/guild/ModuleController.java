@@ -59,7 +59,7 @@ public class ModuleController {
         }
     }
 
-    public int shutdown() {
+    public int safeConfig() {
         int exitcode = 0;
         logger.info("Set of modules shutdown");
         moduleHolder.getModuleList().forEach((module -> {
