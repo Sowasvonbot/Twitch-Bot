@@ -1,8 +1,8 @@
-package core.guild.modules.twitch_api;
+package twitch_api;
 
 
 import botcore.Bot;
-import core.guild.modules.twitch_api.livestream.StreamData;
+import twitch_api.livestream.StreamData;
 import fileManagement.FileLoader;
 import fileManagement.FileStringReader;
 import okhttp3.*;

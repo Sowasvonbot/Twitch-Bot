@@ -15,7 +15,6 @@ import java.util.function.Consumer;
  */
 public interface CommandController {
 
-
     /**
      * Returns the name of the module, maybe just Twitch for the Twitch API or Trollchat for a module that spams commands randomly
      * @return The name of the module as String
@@ -42,7 +41,7 @@ public interface CommandController {
      * @param args All required inputs for the given command, null will be accepted if no inputs are required
      * @return The CompletableFuture with matching dataType of getCommands()
      */
-    CompletableFuture<?>  executeCommandAsync(@Nonnull String command, String[] args);
+    //CompletableFuture<?>  executeCommandAsync(@Nonnull String command, String[] args);
 
     /**
      * Another method to execute a given method. But this time you are able to give it a matching consumer. With this consumer you are able to handle the return instant
@@ -51,7 +50,7 @@ public interface CommandController {
      * @param args All required inputs for the given command, null will be accepted if no inputs are required
      * @return True, when consumer is matching and no other errors occurred
      */
-    Boolean executeCommandWithConsumer(@Nonnull Consumer<?> consumer,@Nonnull String command, String args);
+    //Boolean executeCommandWithConsumer(@Nonnull Consumer<?> consumer,@Nonnull String command, String args);
 
 
     /**

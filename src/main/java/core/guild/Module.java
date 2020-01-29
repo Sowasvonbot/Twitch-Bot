@@ -2,6 +2,7 @@ package core.guild;
 
 import core.guild.modules.CommandController;
 import core.guild.modules.MiscModuleData;
+import core.guild.modules.commands.Executor;
 
 import javax.annotation.Nonnull;
 
@@ -12,13 +13,14 @@ public class Module {
     private MiscModuleData moduleData;
     private String name;
     private boolean online;
+    private Executor executor;
 
 
-    public Module(@Nonnull CommandController controller, @Nonnull MiscModuleData moduleData, String name, Boolean online) {
+    public Module(@Nonnull CommandController controller, @Nonnull MiscModuleData moduleData, String name) {
         this.controller = controller;
         this.moduleData = moduleData;
         this.name = name;
-        this.online = online;
+        executor = new Executor(controller);
     }
 
     public CommandController getController() {
@@ -35,5 +37,9 @@ public class Module {
 
     public boolean isOnline() {
         return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 }

@@ -18,6 +18,8 @@ run {
     standardInput = System.in
 }
 
+compileJava.options.encoding = 'UTF-8'
+
 dependencies {
     compile ('net.dv8tion:JDA:4.1.0_100') {
         exclude module: 'opus-java'

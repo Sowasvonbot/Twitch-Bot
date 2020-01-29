@@ -1,13 +1,18 @@
 package core.guild;
 
+import core.guild.modules.commands.Executor;
 import fileManagement.FileLoader;
 import fileManagement.FileSaver;
 import fileManagement.FileStringReader;
 import org.json.JSONException;
 import org.json.JSONObject;
+import twitch_api.Config;
+import twitch_api.ModuleAPI;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
 public class ModuleController {
 
@@ -20,8 +25,10 @@ public class ModuleController {
         this.moduleHolder = moduleHolder;
         //TODO Add modules here
 
-        moduleHolder.addModule(new Module(null,null, "Twitch", getActiveStatus("Twitch")));
-        moduleHolder.addModule(new Module(null,null, "Test", getActiveStatus("Test")));
+        Module twitch = new ModuleAPI().getModule();
+        moduleHolder.addModule(twitch);
+        twitch.setOnline(getActiveStatus(twitch.getName()));
+
 
         System.out.println("Modules loaded");
 
@@ -60,5 +67,12 @@ public class ModuleController {
             }
         }));
         return exitcode;
+    }
+
+
+    public HashMap<String, Executor> getExecutorsForAllModules(){
+        HashMap<String, Executor> executors = new HashMap<>();
+        moduleHolder.getModuleList().forEach((module -> executors.put(module.getName(),new Executor(module.getController()))));
+        return executors;
     }
 }

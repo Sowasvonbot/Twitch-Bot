@@ -30,9 +30,14 @@ public class GuildHandler {
         guildLogger.info("Guild {} is loading",guild.getName());
         String path = File.separator +"data"+ File.separator + guild.getName();
         FileLoader.getInstance().createDir(path);
-        ModuleHolder moduleHolder = new ModuleHolder();
-        guild.setModuleController(new ModuleController(path,moduleHolder));
-        new CommandListener(guild.getGuildID(),moduleHolder);
+
+        ModuleController moduleHolder = new ModuleController(path, new ModuleHolder());
+        guild.setModuleController(moduleHolder);
+
+
+        new CommandListener(guild.getGuildID(),moduleHolder.getExecutorsForAllModules());
+
+
         guildLogger.info("Guild {} loaded",guild.getName());
         //System.out.println("Guild " + guild.getName() + " loaded");
     }
