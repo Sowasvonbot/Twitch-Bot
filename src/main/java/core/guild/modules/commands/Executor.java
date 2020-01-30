@@ -1,8 +1,10 @@
 package core.guild.modules.commands;
 
 import botcore.EmbedWithPicture;
+import botcore.MessageHolder;
 import botcore.Output;
 import core.guild.modules.CommandController;
+import core.guild.modules.CommandReturn;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.slf4j.Logger;
@@ -28,13 +30,16 @@ public class Executor {
     public void executeCommand(String parameter, String[] args, long channelID) {
         executorService.submit(() ->{
             logger.info("Executing command {} with parameters", parameter);
-            Object o = commandController.executeCommand(parameter, args);
+            CommandReturn commandReturn = commandController.executeCommand(parameter, args);
+            Object o = commandReturn.getContent();
+            MessageHolder messageHolder = null;
+            messageHolder = commandReturn.getMessageHolder();
             if (o instanceof Message) {
-                Output.sendMessageToChannel(channelID, (Message) o);
+                Output.sendMessageToChannel(channelID, (Message) o, messageHolder);
             } else if (o instanceof MessageEmbed) {
-                Output.sendMessageToChannel(channelID, (MessageEmbed) o );
+                Output.sendMessageToChannel(channelID, (MessageEmbed) o, messageHolder );
             } else if (o instanceof EmbedWithPicture){
-                Output.sendMessageToChannel(channelID, (EmbedWithPicture) o);
+                Output.sendMessageToChannel(channelID, (EmbedWithPicture) o, messageHolder);
 
             } else{
                 Output.sendMessageToChannel(channelID,o.toString());

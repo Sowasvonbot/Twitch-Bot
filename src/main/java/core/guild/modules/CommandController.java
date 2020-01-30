@@ -33,7 +33,7 @@ public interface CommandController {
      * @return The return value specified in getMethods
      * @param args All required inputs for the given command, null will be accepted if no inputs are required
      */
-    Object executeCommand(@Nonnull String command, String[] args);
+    CommandReturn executeCommand(@Nonnull String command, String[] args);
 
     /**
      * Basically the same like executeCommand, but the return is a CompletableFuture to be executed with a thread pool of your choice. The return type is also described in getCommands()

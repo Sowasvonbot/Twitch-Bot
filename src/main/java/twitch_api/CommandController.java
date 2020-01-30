@@ -1,9 +1,7 @@
 package twitch_api;
 
-import botcore.EmbedWithPicture;
-import botcore.MyEmbedBuilder;
-import botcore.MyMessageBuilder;
-import botcore.Output;
+import botcore.*;
+import core.guild.modules.CommandReturn;
 import core.guild.modules.commands.Command;
 import twitch_api.livestream.StreamData;
 
@@ -18,9 +16,11 @@ import java.util.List;
 public class CommandController implements core.guild.modules.CommandController {
 
     private Config config;
+    private List<MessageHolder> messageHolders;
 
     public CommandController(Config config) {
         this.config = config;
+        messageHolders = new ArrayList<>();
     }
 
     @Override
@@ -39,28 +39,42 @@ public class CommandController implements core.guild.modules.CommandController {
     }
 
     @Override
-    public Object executeCommand(@Nonnull String command, String[] args) {
-        switch(command){
+    public CommandReturn executeCommand(@Nonnull String command, String[] args) {
+        CommandReturn commandReturn = null;
+        switch(command.toLowerCase()){
             case "ping":
-                return new MyMessageBuilder().append("pong").build();
-            case "getLiveStream":
+                commandReturn = new CommandReturn(new MyMessageBuilder().append("pong").build());
+                break;
+            case "getlivestream":
 
                 if(args != null && args.length >= 1) {
                         int clientId = TwitchApiEndpoints.getClientID(args[0]);
                         StreamData data = TwitchApiEndpoints.getLiveStreamByUser(clientId);
-                        if (data.isOnline()) return new EmbedWithPicture(
+                        if (data.isOnline()) commandReturn = new CommandReturn(
+                                new EmbedWithPicture(
                                 new MyEmbedBuilder().setDescription(data.toString() + " " +data.getStreamLink().toString()).setTitle(data.getStreamerName(), data.getStreamLink().toString()),
                                 data.getPictureURL(),
-                                data.getLogo());
-                        else return data.toString();
+                                data.getLogo()));
+                        else commandReturn = new CommandReturn(data.toString());
 
                 } else{
-                    return "please use getLiveStream userHere";
+                    commandReturn = new CommandReturn("please use getLiveStream userHere");
                 }
+                break;
+            case "getids":
+                String res = "AllMessages: \n";
+                for (MessageHolder messageHolder: messageHolders) {
+                    res = res + messageHolder.toString() + "\n";
+                }
+                commandReturn = new CommandReturn(res);
+                break;
             default:
-                return "no command given";
+                commandReturn =  new CommandReturn("no command given");
 
         }
+        MessageHolder messageHolder = new MessageHolder();
+        messageHolders.add(messageHolder);
+        return commandReturn.setMessageHolder(messageHolder);
     }
 
     @Override

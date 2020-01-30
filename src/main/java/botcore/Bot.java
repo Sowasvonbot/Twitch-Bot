@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import okhttp3.OkHttpClient;
 
@@ -71,6 +73,22 @@ public class Bot {
 
     public static void addListener(ListenerAdapter myListenerAdapter ){
         getInstance().getMyJDA().addEventListener(myListenerAdapter);
+    }
+
+    public static void removeListener(ListenerAdapter listenerAdapter){
+        getInstance().getMyJDA().removeEventListener(listenerAdapter);
+    }
+
+    public static User getBotUser(){
+        return getInstance().myJDA.getSelfUser();
+    }
+
+    public static User getUser(long id){
+        return getInstance().getMyJDA().getUserById(id);
+    }
+
+    public static net.dv8tion.jda.api.entities.Guild getGuild(long id){
+        return getInstance().getMyJDA().getGuildById(id);
     }
 
 
