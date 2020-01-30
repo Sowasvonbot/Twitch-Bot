@@ -33,6 +33,7 @@ public class ConfigController {
         if (this.hasAdminPermission(userID,guildID)) sendMessage("Du bist Admin auf dem Server "+ Bot.getGuild(guildID).getName());
         else sendMessage("Du bist kein Admin auf dem Server " + Bot.getGuild(guildID).getName());
 
+
         timer = new Timer(user,new ConfigListener(), this);
 
 
