@@ -53,7 +53,7 @@ public class CommandListener extends ListenerAdapter {
             }
             return;
         }
-        if (parameters[0].charAt(0) != '!') return;
+        if (parameters[0].length() < 2 || parameters[0].charAt(0) != '!') return;
         String[] args = null;
         if (parameters.length >= 2) {
             args = new String[parameters.length -1];
