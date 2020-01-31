@@ -17,7 +17,6 @@ import java.util.concurrent.Executors;
 
 public class CommandListener extends ListenerAdapter {
 
-
     private long myGuildID;
     private Map<String, Executor> executorList;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -67,33 +66,6 @@ public class CommandListener extends ListenerAdapter {
                     args,
                     event.getChannel().getIdLong());
         }
-        //executorList.forEach((s, executor) -> executor.executeCommand(parameters[0].replace("!",""),args));
-
-        /*if (parameters[0].contains("config")){
-            Output.sendMessageToChannel(event.getChannel().getIdLong(), "Da hat jemand config eingegeben");
-
-            //TODO Here give the content to the config controller
-            GuildHandler.saveConfigs(event.getGuild().getIdLong());
-        } else{
-            //TODO give content to command controller
-            Executor executor = executorList.get(parameters[0].toLowerCase());
-            if (executor == null) return;
-            if (parameters.length < 2){
-                Output.sendMessageToChannel(event.getChannel().getIdLong(),
-                        "Welchen Commmand möchtest du ausführen?\n" +
-                                executor.getCommands()
-                        );
-            }
-            else {
-                String[] args = null;
-                if (parameters.length > 2){
-                    args = new String[parameters.length -2];
-                    for (int i = 0; i < parameters.length -2; i++) args[i] = parameters[i+2];
-                }
-                executor.executeCommand(parameters[1], args, event.getChannel().getIdLong());
-            }
-
-        }*/
 
     }
 }

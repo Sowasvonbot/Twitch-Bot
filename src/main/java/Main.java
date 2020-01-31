@@ -1,5 +1,7 @@
 import botcore.Bot;
 import core.GuildHandler;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -13,6 +15,8 @@ public class Main {
         //StreamData streamData =  TwitchApiEndpoints.getLiveStreamByUser(TwitchApiEndpoints.getClientID("lec"));
 
         GuildHandler guildHandler =  new GuildHandler();
+
+        JSONObject object;
 
         setupScanner(guildHandler);
     }

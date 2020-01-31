@@ -6,10 +6,7 @@ import fileManagement.FileStringReader;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import okhttp3.OkHttpClient;
 
@@ -89,6 +86,31 @@ public class Bot {
 
     public static net.dv8tion.jda.api.entities.Guild getGuild(long id){
         return getInstance().getMyJDA().getGuildById(id);
+    }
+
+    public static long getRoleIDforGuild(long guildID, String roleName){
+        Role role = getInstance().getMyJDA().getGuildById(guildID).getRolesByName(roleName,true).get(0);
+        if (role == null) return 0;
+        return role.getIdLong();
+    }
+
+    public static List<String> getAllMembersWithRole(long roleID){
+        List<String> result = new ArrayList<>();
+        Role role =  getInstance().getMyJDA().getRoleById(roleID);
+        net.dv8tion.jda.api.entities.Guild guild = role.getGuild();
+        guild.getMembersWithRoles(role).forEach(member -> result.add(member.getUser().getName()));
+        return result;
+    }
+
+    public static long getChannelIDByName(String name, long guildID){
+        try {
+            return getInstance().getMyJDA()
+                    .getGuildById(guildID)
+                    .getTextChannelsByName(name, true)
+                    .get(0).getIdLong();
+        } catch (Exception e){
+            return 0;
+        }
     }
 
 

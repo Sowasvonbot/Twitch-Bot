@@ -72,7 +72,7 @@ public interface CommandController {
      * @param value The value to be set
      * @return The response, maybe variable not found or value not accepted on failure, SUCCESS when successful
      */
-    String setConfigVariable(String variable, String value);
+    String setConfigVariable(String variable, String value, long guildID);
 
 
 }

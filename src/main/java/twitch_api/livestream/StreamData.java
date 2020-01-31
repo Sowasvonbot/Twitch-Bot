@@ -13,9 +13,10 @@ public class StreamData {
     private String streamerName;
     private String streamName;
     private URL streamLink;
+    private int viewer;
 
 
-    public StreamData(boolean online, URL pictureURL, String game, URL logo, String streamerName, String streamName, URL streamLink) {
+    public StreamData(boolean online, URL pictureURL, String game, URL logo, String streamerName, String streamName, URL streamLink, int viewer) {
         this.online = online;
         this.pictureURL = pictureURL;
         this.game = game;
@@ -23,7 +24,10 @@ public class StreamData {
         this.streamerName = streamerName;
         this.streamName = streamName;
         this.streamLink = streamLink;
+        this.viewer = viewer;
     }
+
+    public int getViewer() { return viewer;}
 
     public StreamData(boolean online) {
         this.online = online;

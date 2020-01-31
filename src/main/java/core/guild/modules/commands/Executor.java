@@ -5,6 +5,7 @@ import botcore.MessageHolder;
 import botcore.Output;
 import core.guild.modules.CommandController;
 import core.guild.modules.CommandReturn;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.slf4j.Logger;
@@ -40,7 +41,6 @@ public class Executor {
                 Output.sendMessageToChannel(channelID, (MessageEmbed) o, messageHolder );
             } else if (o instanceof EmbedWithPicture){
                 Output.sendMessageToChannel(channelID, (EmbedWithPicture) o, messageHolder);
-
             } else{
                 Output.sendMessageToChannel(channelID,o.toString());
         }
@@ -50,5 +50,9 @@ public class Executor {
     public String getCommands() {
         if (commandController.getCommands()!= null) return commandController.getCommands().toString();
         return "No commands :(";
+    }
+
+    public CommandController getCommandController() {
+        return commandController;
     }
 }

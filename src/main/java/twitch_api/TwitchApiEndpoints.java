@@ -30,13 +30,17 @@ public abstract class TwitchApiEndpoints {
     }
 
     public static int getClientID(String userName){
-        logger.info("Trying to get ClientID for {}", userName);
-        Request request = templateBuilder()
-                .url("https://api.twitch.tv/kraken/users?login=" + userName)
-                .build();
-        JSONObject answer = sendRequest(request);
-        return answer.getJSONArray("users").getJSONObject(0).getInt("_id");
-
+        try {
+            logger.info("Trying to get ClientID for {}", userName);
+            Request request = templateBuilder()
+                    .url("https://api.twitch.tv/kraken/users?login=" + userName)
+                    .build();
+            JSONObject answer = sendRequest(request);
+            return answer.getJSONArray("users").getJSONObject(0).getInt("_id");
+        } catch (JSONException e){
+            logger.info(e.getMessage());
+            return 0;
+        }
 
     }
 
@@ -63,7 +67,8 @@ public abstract class TwitchApiEndpoints {
                     new URL(channel.getString("logo")),
                     channel.getString("name"),
                     channel.getString("status"),
-                    new URL(channel.getString("url"))
+                    new URL(channel.getString("url")),
+                    stream.getInt("viewers")
                     );
         } catch (JSONException json){json.printStackTrace();}
         catch (MalformedURLException malformed){

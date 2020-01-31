@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public abstract class Output {
@@ -60,7 +61,17 @@ public abstract class Output {
 
 
     public static boolean sendMessageToChannel(long channelID, EmbedWithPicture message, MessageHolder messageHolder) {
-        try {
+        try{
+            messageHolder.setMessage(buildMessage(channelID,message).complete());
+            return false;
+        } catch (Exception e){
+            logger.info(e.getMessage());
+            return false;
+        }
+    }
+
+    private static MessageAction buildMessage(long channelID, EmbedWithPicture message){
+        try{
             MessageAction currAction = null;
             InputStream  file = null;
             InputStream thumbnail = null;
@@ -80,17 +91,31 @@ public abstract class Output {
             if (currAction != null && thumbnail != null) currAction.addFile(thumbnail, "thumbnail.jpg");
             else if (currAction == null && thumbnail != null) currAction = channel.sendFile(thumbnail, "thumbnail.jpg");
             else if (currAction == null && thumbnail == null) {
-                channel.sendMessage(embedBuilder.build()).queue(messageHolder::setMessage);
-                return true;
+                return channel.sendMessage(embedBuilder.build());
             }
-            currAction.embed(embedBuilder.build()).queue(messageHolder::setMessage);
-            return true;
+            return currAction.embed(embedBuilder.build());
         } catch (NullPointerException nullPointer){
             logger.info(nullPointer.getMessage());
-            return true;
+            return null;
         } catch (Exception e){
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean deleteMessageByID(long messageID, long channelID){
+        try {
+            Bot.getInstance().getMyJDA().getTextChannelById(channelID).deleteMessageById(messageID).queue();
+            return true;
+        } catch (Exception e){
+            logger.info("Tried to delete message: "+ messageID + " in Channel "+ channelID);
             return false;
         }
+    }
+
+    public static boolean editEmbedMessageByID(long messageID, long channelID, MessageEmbed embed){
+        TextChannel channel = Bot.getInstance().getMyJDA().getTextChannelById(channelID);
+        channel.editMessageById(messageID, embed).queue();
+        return true;
     }
 }
