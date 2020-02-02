@@ -55,10 +55,9 @@ public class Config implements MiscModuleData {
     public String saveConfig() {
         JSONObject configData = new JSONObject();
         configData.put("Streamer", liveStreamer);
-        getConfigVariables().entrySet().forEach(entry -> {
-            if (!entry.getKey().equalsIgnoreCase("Streamer")) configData.put(entry.getKey(),entry.getValue());
-        });
-
+        configData.put("liveStreamChannelUpdateID", Long.toString(liveStreamChannelUpdateID));
+        configData.put("liveStreamWatch", Boolean.toString(liveStreamWatch));
+        configData.put("liveStreamRoleID", Long.toString(liveStreamRoleID));
 
         return  configData.toString();
     }
@@ -78,34 +77,33 @@ public class Config implements MiscModuleData {
     protected HashMap<String, String> getConfigVariables() {
         HashMap<String, String> configs = new HashMap<>();
         configs.put("Streamer", liveStreamerToString());
-        configs.put("liveStreamChannelUpdateID", Long.toString(liveStreamChannelUpdateID));
-        configs.put("liveStreamWatch", Boolean.toString(liveStreamWatch));
-        configs.put("liveStreamRoleID", Long.toString(liveStreamRoleID));
+        configs.put("Update Channel ID", Long.toString(liveStreamChannelUpdateID));
+        configs.put("Is updating", Boolean.toString(liveStreamWatch));
 
         return configs;
     }
 
     protected String getConfigDescription(){
         return new StringBuilder()
-                .append("SetUpdateChannel sets the text channel, where the bot writes the updating live streams").append("\n")
+                .append("SetUpdateChannel: sets the text channel, where the bot writes the updating live streams").append("\n")
                 .append("Usage: setUpdateChannel ChannelName").append("\n")
                 .append("\n")
-                .append("addStreamer adds a new Streamer").append("\n")
+                .append("addStreamer: adds a new Streamer").append("\n")
                 .append("Usage: addStreamer streamerName").append("\n")
                 .append("\n")
-                .append("setStreamer resets all streamers and fills in the given Streamer").append("\n")
+                .append("setStreamer: resets all streamers and fills in the given Streamer").append("\n")
                 .append("Usage: setStreamer streamerName").append("\n")
                 .append("\n")
-                .append("removeStreamer removes the given streamer").append("\n")
+                .append("removeStreamer: removes the given streamer").append("\n")
                 .append("Usage: removeStreamer streamerName").append("\n")
                 .append("\n")
-                .append("setStreamerRole sets the role which should be watched, if is currently live streaming").append("\n")
+                .append("setStreamerRole: loads all members of this role as streamer to watched. It will be display, if a name couldn't be found at twitch ").append("\n")
                 .append("Usage: setStreamerRole roleName").append("\n")
                 .append("\n")
-                .append("activate activates the live stream updater").append("\n")
+                .append("activate: activates the live stream updater").append("\n")
                 .append("Usage: activate updater").append("\n")
                 .append("\n")
-                .append("deactivate deactivates the live stream updater")
+                .append("deactivate: deactivates the live stream updater")
                 .append("Usage: deactivate updater").append("\n")
                 .toString();
     }

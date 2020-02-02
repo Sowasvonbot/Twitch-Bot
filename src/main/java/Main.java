@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         //StreamData streamData =  TwitchApiEndpoints.getLiveStreamByUser(TwitchApiEndpoints.getClientID("lec"));
 
-        GuildHandler guildHandler =  new GuildHandler();
+        GuildHandler guildHandler =  GuildHandler.getInstance();
 
         JSONObject object;
 

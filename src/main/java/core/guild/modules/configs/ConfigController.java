@@ -1,6 +1,7 @@
 package core.guild.modules.configs;
 
 import botcore.Bot;
+import core.GuildHandler;
 import core.guild.modules.CommandController;
 import core.guild.modules.commands.Executor;
 import net.dv8tion.jda.api.Permission;
@@ -80,13 +81,16 @@ public class ConfigController {
                             sendMessage("Missing parameter or command in " + message);
                             return;
                         }
-                        if (args.length>2){
-                            sendMessage("To many arguments");
-                            return;
-                        }
-                        sendMessage(commandController.setConfigVariable(args[0],args[1],guildID));
+                        sendMessage(commandController.setConfigVariable(args[0],argsToString(args),guildID));
+                        GuildHandler.getInstance().saveConfigs(guildID);
                 }
         }
+    }
+
+    private String argsToString(String[] args){
+        String res = "";
+        for (int i = 1; i < args.length; i++) res = res + args[i];
+        return res;
     }
 
     private void selectModule(){

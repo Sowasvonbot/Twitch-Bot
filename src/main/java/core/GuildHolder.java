@@ -31,4 +31,9 @@ public class GuildHolder {
         return null;
     }
 
+    public Guild getGuildWithID(long guildID){
+        for (Guild guild:guilds) if(guild.getGuildID() == guildID) return guild;
+        return null;
+    }
+
 }

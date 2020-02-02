@@ -14,8 +14,14 @@ public class GuildHandler {
 
     private final Logger guildLogger = LoggerFactory.getLogger(GuildHandler.class);
     private static GuildHolder holdedGuilds;
+    private static GuildHandler instance;
 
-    public GuildHandler() {
+    public static GuildHandler getInstance(){
+        if(instance == null) instance = new GuildHandler();
+        return instance;
+    }
+
+    private GuildHandler() {
         guildLogger.info("Starting Guild Handler");
         holdedGuilds = new GuildHolder(Bot.getActiveGuilds());
         holdedGuilds.getGuilds().forEach((guild -> initGuild(guild)));
@@ -54,7 +60,9 @@ public class GuildHandler {
         return exitcode;
     }
 
-    public static void saveConfigs(long id){
-        holdedGuilds.getGuilds().forEach(guild -> guild.getModuleController().safeConfig());
+
+    public synchronized void saveConfigs(long id){
+        Guild guild = holdedGuilds.getGuildWithID(id);
+        if(guild != null) guild.getModuleController().safeConfig();
     }
 }
