@@ -34,8 +34,11 @@ public class CommandController implements core.guild.modules.CommandController {
 
     @Override
     public List<Command> getCommands() {
-        Command command = new Command("getLiveStream", null, Command.returnValues.STRING);
-        Command command2 = new Command("ping", null, Command.returnValues.STRING);
+        Command command = new Command("getLiveStream",
+                null,
+                Command.returnValues.STRING,
+                "tries to find the given streamer and returns the livestream");
+        Command command2 = new Command("ping", null, Command.returnValues.STRING, "writes Pong :D");
         List<Command> list = new ArrayList<>();
         list.add(command);
         list.add(command2);
@@ -68,8 +71,6 @@ public class CommandController implements core.guild.modules.CommandController {
                 }
                 commandReturn = new CommandReturn(res);
                 break;
-            default:
-                commandReturn = new CommandReturn("no command given");
 
         }
         MessageHolder messageHolder = new MessageHolder();

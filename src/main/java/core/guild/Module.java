@@ -20,7 +20,7 @@ public class Module {
         this.controller = controller;
         this.moduleData = moduleData;
         this.name = name;
-        executor = new Executor(controller);
+        executor = new Executor(controller,name);
     }
 
     public CommandController getController() {

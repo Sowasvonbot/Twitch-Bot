@@ -20,16 +20,22 @@ public class Executor {
     private CommandHolder commandHolder;
     private CommandController commandController;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private String moduleName;
 
-    public Executor(CommandController commandController){
+    public Executor(CommandController controller, String name) {
         executorService = Executors.newSingleThreadExecutor();
-        this.commandController = commandController;
+        this.commandController = controller;
         commandHolder = new CommandHolder();
-
+        moduleName = name;
     }
 
     public void executeCommand(String parameter, String[] args, long channelID) {
         executorService.submit(() ->{
+
+            if(parameter.equalsIgnoreCase("commands")) {
+                Output.sendMessageToChannel(channelID,getCommands());
+                return;
+            }
             logger.info("Executing command {} with parameters", parameter);
             CommandReturn commandReturn = commandController.executeCommand(parameter, args);
             Object o = commandReturn.getContent();
@@ -47,9 +53,16 @@ public class Executor {
         });
     }
 
-    public String getCommands() {
-        if (commandController.getCommands()!= null) return commandController.getCommands().toString();
-        return "No commands :(";
+    public MessageEmbed getCommands() {
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        if (commandController.getCommands() == null){
+            return embedBuilder.setTitle("No commands :(").build();
+        }
+        embedBuilder.setTitle(moduleName);
+        commandController.getCommands().forEach(command->{
+            embedBuilder.addField(command.getName(),command.getDescription(),true);
+        });
+        return embedBuilder.build();
     }
 
     public CommandController getCommandController() {

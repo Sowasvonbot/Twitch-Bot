@@ -33,10 +33,9 @@ public abstract class Output {
 
     public static boolean sendMessageToChannel(long channelID, Message message, MessageHolder messageHolder){
         try {
-            //TextChannel channel = Bot.getInstance().getMyJDA().getTextChannelById(channelID);
-            //if (messageHolder != null)
-            Bot.getInstance().getMyJDA().getTextChannelById(channelID).sendMessage(message).queue(messageHolder::setMessage);
-            return true;
+            return sendMessageAction(
+                    Bot.getInstance().getMyJDA().getTextChannelById(channelID).sendMessage(message),
+                    messageHolder);
         } catch (NullPointerException nullPointer){
             logger.info(nullPointer.getMessage());
             return true;
@@ -48,8 +47,9 @@ public abstract class Output {
 
     public static boolean sendMessageToChannel(long channelID, MessageEmbed message, MessageHolder messageHolder){
         try {
-            Bot.getInstance().getMyJDA().getTextChannelById(channelID).sendMessage(message).queue(messageHolder::setMessage);
-            return true;
+            return sendMessageAction(
+                    Bot.getInstance().getMyJDA().getTextChannelById(channelID).sendMessage(message),
+                    messageHolder);
         } catch (NullPointerException nullPointer){
             logger.info(nullPointer.getMessage());
             return true;
@@ -62,12 +62,20 @@ public abstract class Output {
 
     public static boolean sendMessageToChannel(long channelID, EmbedWithPicture message, MessageHolder messageHolder) {
         try{
-            messageHolder.setMessage(buildMessage(channelID,message).complete());
-            return false;
+            return sendMessageAction(buildMessage(channelID,message), messageHolder);
         } catch (Exception e){
             logger.info(e.getMessage());
             return false;
         }
+    }
+
+    private static boolean sendMessageAction(MessageAction action, MessageHolder holder){
+        if(holder == null) {action.queue(); return true;}
+        try {
+            Message message = action.complete();
+            holder.setMessage(message);
+            return true;
+        } catch (Exception e){logger.warn(e.getMessage()); return false;}
     }
 
     private static MessageAction buildMessage(long channelID, EmbedWithPicture message){

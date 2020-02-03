@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'de.tk-industries'
-version '1.0'
+version '1.1'
 
 sourceCompatibility = 1.9
 mainClassName = 'Main'
@@ -22,7 +22,7 @@ run {
 compileJava.options.encoding = 'UTF-8'
 
 dependencies {
-    compile ('net.dv8tion:JDA:4.1.0_100') {
+    compile ('net.dv8tion:JDA:4.1.1_105') {
         exclude module: 'opus-java'
     }
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.0'

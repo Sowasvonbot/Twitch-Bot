@@ -7,6 +7,7 @@ public class Command {
     private String name;
     private HashMap<String,String> values;
     private returnValues returnValue;
+    private String description;
 
 
     public String getName() {
@@ -33,7 +34,9 @@ public class Command {
         this.returnValue = returnValue;
     }
 
-
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * Set the name of the command, all parameters(values) and the returnValue from the enumList returnValues e.g. returnValues.INT for example
@@ -41,10 +44,11 @@ public class Command {
      * @param values HashMap of first Value, then Description
      * @param returnValue The possible return, e.g for the twitch api a valid client id
      */
-    public Command(String name, HashMap<String, String> values, returnValues returnValue) {
+    public Command(String name, HashMap<String, String> values, returnValues returnValue, String description) {
         this.name = name;
         this.values = values;
         this.returnValue = returnValue;
+        this.description = description;
     }
 
     @Override

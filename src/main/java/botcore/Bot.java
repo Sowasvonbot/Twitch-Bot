@@ -9,26 +9,38 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import okhttp3.OkHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Bot {
 
     private static Bot instance;
     private JDA myJDA;
+    private List<String> statusList;
+    private Iterator<String> iterator;
+    private ScheduledExecutorService statusCycler;
+    private final static Logger logger = LoggerFactory.getLogger("Bot");
 
 
     private Bot(){
+        statusList = new ArrayList<>();
         try {
+            readStatusList();
             FileLoader.getInstance().loadFileFromClasspath("data/token.txt");
             myJDA = new JDABuilder()
                     .setActivity(Activity.watching("faule Freunde"))
                     .setStatus(OnlineStatus.ONLINE)
                     .setToken(FileStringReader.getInstance().getFileContentAsString("token"))
                     .build().awaitReady();
+            startStatusCycling();
         } catch (LoginException e) {
             e.printStackTrace();
             System.exit(1);
@@ -40,6 +52,39 @@ public class Bot {
             System.exit(1);
         }
     }
+
+    private void startStatusCycling(){
+
+        statusCycler = Executors.newSingleThreadScheduledExecutor();
+        statusCycler.scheduleAtFixedRate(
+                () -> {
+                    try{
+                        myJDA.getPresence().setActivity(Activity.of(Activity.ActivityType.WATCHING, getNextStatus()));
+                    } catch (Exception e){logger.warn(e.getMessage());}
+                },
+                0,
+                1,
+                TimeUnit.MINUTES
+        );
+
+    }
+
+    private void readStatusList() throws IOException {
+        FileLoader.getInstance().loadFileFromClasspath(File.separator + "data" + File.separator + "statusList");
+        statusList.addAll(
+                Arrays.asList(FileStringReader.getInstance().getFileContentAsString("data" + File.separator +  "statusList").split(","))
+        );
+        Collections.shuffle(statusList);
+    }
+
+    private String getNextStatus(){
+        if (iterator == null) iterator = statusList.iterator();
+        if (iterator.hasNext()) return iterator.next();
+        Collections.shuffle(statusList);
+        iterator = statusList.iterator();
+        return iterator.next();
+    }
+
 
     public JDA getMyJDA() {
         return myJDA;

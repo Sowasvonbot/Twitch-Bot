@@ -81,7 +81,7 @@ public class ModuleController {
 
     public HashMap<String, Executor> getExecutorsForAllModules(){
         HashMap<String, Executor> executors = new HashMap<>();
-        moduleHolder.getModuleList().forEach((module -> executors.put(module.getName(),new Executor(module.getController()))));
+        moduleHolder.getModuleList().forEach((module -> executors.put(module.getName(),new Executor(module.getController(), module.getName()))));
         return executors;
     }
 

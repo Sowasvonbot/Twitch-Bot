@@ -3,7 +3,12 @@ package core.guild;
 import botcore.Bot;
 import core.guild.modules.commands.Executor;
 import core.guild.modules.configs.ConfigController;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,11 +38,28 @@ public class CommandListener extends ListenerAdapter {
     }
 
     @Override
+    public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
+        handleInput(
+                event.getAuthor(),
+                event.getGuild(),
+                event.getMessage()
+                );
+    }
+
+    @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
-        if (event.getAuthor().isBot() || event.getGuild().getIdLong() != myGuildID) return;
+        handleInput(
+                event.getAuthor(),
+                event.getGuild(),
+                event.getMessage()
+        );
+    }
+
+    private void handleInput(User author, Guild guild, Message message){
+        if (author.isBot() || guild.getIdLong() != myGuildID) return;
 
 
-        String messageContent = event.getMessage().getContentRaw();
+        String messageContent = message.getContentRaw();
 
         logger.debug("Incoming message {}", messageContent);
 
@@ -45,10 +67,10 @@ public class CommandListener extends ListenerAdapter {
         String[] parameters = messageContent.split(" ");
         if (parameters.length == 0) return;
 
-        if (event.getMessage().getMentionedUsers().contains(Bot.getBotUser())){
-            if (event.getMessage().getContentRaw().toLowerCase().contains("config")){
+        if (message.getMentionedUsers().contains(Bot.getBotUser())){
+            if (message.getContentRaw().toLowerCase().contains("config")){
                 //TODO instance of new ConfigController(Executor, UserID, Guild
-                configService.submit(() -> new ConfigController(event.getAuthor().getIdLong(),event.getGuild().getIdLong(), executorList));
+                configService.submit(() -> new ConfigController(author.getIdLong(),guild.getIdLong(), executorList));
             }
             return;
         }
@@ -64,8 +86,7 @@ public class CommandListener extends ListenerAdapter {
             entry.getValue().executeCommand(
                     parameters[0].replace("!",""),
                     args,
-                    event.getChannel().getIdLong());
+                    message.getChannel().getIdLong());
         }
-
     }
 }
