@@ -24,6 +24,7 @@ public class Executor {
 
     public Executor(CommandController controller, String name) {
         executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(()->Thread.currentThread().setName("name"));
         this.commandController = controller;
         commandHolder = new CommandHolder();
         moduleName = name;
@@ -67,5 +68,10 @@ public class Executor {
 
     public CommandController getCommandController() {
         return commandController;
+    }
+
+    public void shutdown() {
+        logger.info("shutdown of {} executor",moduleName);
+        executorService.shutdown();
     }
 }

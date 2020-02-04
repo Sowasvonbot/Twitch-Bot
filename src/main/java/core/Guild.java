@@ -1,5 +1,6 @@
 package core;
 
+import core.guild.CommandListener;
 import core.guild.ModuleController;
 
 public class Guild {
@@ -8,6 +9,7 @@ public class Guild {
     private String name;
     private long ownerID;
     private ModuleController moduleController;
+    private CommandListener commandListener;
 
 
     public ModuleController getModuleController() {
@@ -46,5 +48,13 @@ public class Guild {
         this.guildID = guildID;
         this.name = name;
         this.ownerID = ownerID;
+    }
+
+    public CommandListener getCommandListener() {
+        return commandListener;
+    }
+
+    public void setCommandListener(CommandListener commandListener) {
+        this.commandListener = commandListener;
     }
 }

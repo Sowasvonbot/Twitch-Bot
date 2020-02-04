@@ -1,5 +1,6 @@
 package core.guild;
 
+import core.BigDiscordBot;
 import core.guild.modules.commands.Executor;
 import fileManagement.FileLoader;
 import fileManagement.FileSaver;
@@ -28,9 +29,18 @@ public class ModuleController {
         this.moduleHolder = moduleHolder;
         //TODO Add modules here
 
-        Module twitch = new ModuleAPI().getModule();
-        moduleHolder.addModule(twitch);
-        twitch.setOnline(getActiveStatus(twitch.getName()));
+        BigDiscordBot.getInstance().getRegisteredModules().forEach(moduleAPI -> {
+            try {
+                Module module = moduleAPI.getClass().getConstructor().newInstance().getModule();
+                moduleHolder.addModule(module);
+                logger.info("Loaded module {}", module.getName());
+            } catch (NoSuchMethodException noMethod){
+                logger.error("Loading module {} failed", moduleAPI.getModule().getName());
+                logger.error("No valid constructor found");
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        });
 
 
 
@@ -90,6 +100,7 @@ public class ModuleController {
     private void initModules(){
         moduleHolder.getModuleList().forEach((module -> {
             String configContent;
+            module.setOnline(getActiveStatus(module.getName()));
             String path = filepath + File.separator + module.getName();
             configContent =  FileStringReader.getInstance().getFileContentAsString(path);
             logger.debug("Loaded config {}",configContent);
@@ -101,5 +112,10 @@ public class ModuleController {
                 module.getModuleData().loadConfig("");
             }
         }));
+    }
+
+    public void shutdown(){
+        safeConfig();
+
     }
 }

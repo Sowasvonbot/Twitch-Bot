@@ -89,4 +89,10 @@ public class CommandListener extends ListenerAdapter {
                     message.getChannel().getIdLong());
         }
     }
+
+    public void shutdown(){
+        logger.info("Shutdown of command listener");
+        Bot.removeListener(this);
+        executorList.values().forEach(executor -> executor.shutdown());
+    }
 }
