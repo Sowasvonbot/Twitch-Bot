@@ -35,23 +35,6 @@ public interface CommandController {
      */
     CommandReturn executeCommand(@Nonnull String command, String[] args);
 
-    /**
-     * Basically the same like executeCommand, but the return is a CompletableFuture to be executed with a thread pool of your choice. The return type is also described in getCommands()
-     * @param command The method to be executed as String
-     * @param args All required inputs for the given command, null will be accepted if no inputs are required
-     * @return The CompletableFuture with matching dataType of getCommands()
-     */
-    //CompletableFuture<?>  executeCommandAsync(@Nonnull String command, String[] args);
-
-    /**
-     * Another method to execute a given method. But this time you are able to give it a matching consumer. With this consumer you are able to handle the return instant
-     * @param consumer The consumer, must match the return type of the function
-     * @param command The command to be executed as String
-     * @param args All required inputs for the given command, null will be accepted if no inputs are required
-     * @return True, when consumer is matching and no other errors occurred
-     */
-    //Boolean executeCommandWithConsumer(@Nonnull Consumer<?> consumer,@Nonnull String command, String args);
-
 
     /**
      * This method will return the whole config description of the module. So all variables and all options have to be listed in this String

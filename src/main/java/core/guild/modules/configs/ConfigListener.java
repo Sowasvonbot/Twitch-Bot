@@ -2,16 +2,10 @@ package core.guild.modules.configs;
 
 
 import botcore.Bot;
-import net.dv8tion.jda.api.entities.Invite;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.annotation.Nonnull;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class ConfigListener extends ListenerAdapter {
 
 

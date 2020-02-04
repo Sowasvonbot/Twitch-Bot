@@ -160,14 +160,14 @@ public class Config implements MiscModuleData {
     private String readAllLiveStreamerFromRole(String role){
         List<String> liveStreamer = Bot.getAllMembersWithRole(liveStreamRoleID);
         List<String> notFound = new ArrayList<>();
-        String result = "Successfully added all members from the role " + role;
+        StringBuilder result = new StringBuilder("Successfully added all members from the role " + role);
         liveStreamer.forEach(name->{
             if (!addStreamer(name))notFound.add(name);
         });
-        if (notFound.isEmpty()) return result;
-        result = "not found:\n";
+        if (notFound.isEmpty()) return result.toString();
+        result = new StringBuilder("not found:\n");
         for (String name : notFound) {
-            result = result + name + "\n";
+            result.append(name).append("\n");
         }
         return result + "Please add them manually";
     }
@@ -175,9 +175,9 @@ public class Config implements MiscModuleData {
 
     private String liveStreamerToString(){
         if(liveStreamer.size() != 0) {
-            String allLivestreamer = "";
+            StringBuilder allLivestreamer = new StringBuilder();
             for (int i = 0; i < liveStreamer.size(); i++) {
-                allLivestreamer = allLivestreamer + ", " + liveStreamer.get(i);
+                allLivestreamer.append(", ").append(liveStreamer.get(i));
             }
             return  allLivestreamer.substring(2);
         }

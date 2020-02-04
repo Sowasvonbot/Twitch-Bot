@@ -65,11 +65,11 @@ public class CommandController implements core.guild.modules.CommandController {
                 }
                 break;
             case "getids":
-                String res = "AllMessages: \n";
+                StringBuilder res = new StringBuilder("AllMessages: \n");
                 for (MessageHolder messageHolder : messageHolders) {
-                    res = res + messageHolder.toString() + "\n";
+                    res.append(messageHolder.toString()).append("\n");
                 }
-                commandReturn = new CommandReturn(res);
+                commandReturn = new CommandReturn(res.toString());
                 break;
 
         }

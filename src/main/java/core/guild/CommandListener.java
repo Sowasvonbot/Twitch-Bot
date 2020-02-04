@@ -78,9 +78,7 @@ public class CommandListener extends ListenerAdapter {
         String[] args = null;
         if (parameters.length >= 2) {
             args = new String[parameters.length -1];
-            for (int i = 0; i < parameters.length-1; i++) {
-                args[i] = parameters[i+1];
-            }
+            System.arraycopy(parameters, 1, args, 0, parameters.length - 1);
         }
         for (Map.Entry<String, Executor> entry :executorList.entrySet()) {
             entry.getValue().executeCommand(

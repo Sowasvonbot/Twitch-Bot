@@ -16,14 +16,14 @@ public interface MiscModuleData {
      * @param fileContent the complete content of his data file
      * @return True, when the file content is in the correct format
      */
-    public boolean loadConfig(String fileContent);
+    boolean loadConfig(String fileContent);
 
 
     /**
      * Will be called, when the program terminates. The return is all data, which should be saved in one string. The format is freely selectable
      * @return All data to be saved as one String
      */
-    public String saveConfig();
+    String saveConfig();
 
 
 }

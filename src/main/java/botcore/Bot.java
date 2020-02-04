@@ -9,9 +9,11 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import okhttp3.OkHttpClient;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +28,6 @@ public class Bot {
     private JDA myJDA;
     private List<String> statusList;
     private Iterator<String> iterator;
-    private ScheduledExecutorService statusCycler;
     private final static Logger logger = LoggerFactory.getLogger("Bot");
 
 
@@ -55,7 +56,7 @@ public class Bot {
 
     private void startStatusCycling(){
 
-        statusCycler = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService statusCycler = Executors.newSingleThreadScheduledExecutor();
         statusCycler.scheduleAtFixedRate(
                 () -> {
                     try{
@@ -133,7 +134,7 @@ public class Bot {
         return getInstance().getMyJDA().getGuildById(id);
     }
 
-    public static long getRoleIDforGuild(long guildID, String roleName){
+    public static long getRoleIDforGuild(long guildID,@Nonnull String roleName){
         Role role = getInstance().getMyJDA().getGuildById(guildID).getRolesByName(roleName,true).get(0);
         if (role == null) return 0;
         return role.getIdLong();

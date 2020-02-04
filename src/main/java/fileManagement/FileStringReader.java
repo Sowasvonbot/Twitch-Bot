@@ -14,7 +14,7 @@ public class FileStringReader {
             BufferedReader reader = new BufferedReader(new java.io.FileReader(FileLoader.getInstance().getFileContainsName(fileName)));
             Optional<String> result;
             result = reader.lines().reduce(String::concat);
-            return result.get();
+            return result.orElse("ERROR");
         } catch (Exception e){
             return "ERROR";
         }

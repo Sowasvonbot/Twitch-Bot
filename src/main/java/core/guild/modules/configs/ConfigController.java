@@ -69,11 +69,11 @@ public class ConfigController {
                         selectModule();
                         return;
                     case "values":
-                        String res = "";
+                        StringBuilder res = new StringBuilder();
                         for (Map.Entry<String,String> entry:commandController.getConfigVariables().entrySet()) {
-                            res = res + entry.getKey() + ": " +entry.getValue() + "\n";
+                            res.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
                         }
-                        sendMessage(res);
+                        sendMessage(res.toString());
                         break;
                     default:
                         String[] args = message.split(" ");
@@ -88,9 +88,9 @@ public class ConfigController {
     }
 
     private String argsToString(String[] args){
-        String res = "";
-        for (int i = 1; i < args.length; i++) res = res + args[i];
-        return res;
+        StringBuilder res = new StringBuilder();
+        for (int i = 1; i < args.length; i++) res.append(args[i]);
+        return res.toString();
     }
 
     private void selectModule(){
