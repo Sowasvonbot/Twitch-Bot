@@ -10,7 +10,6 @@ public class Main {
         //register Modules here
         BigDiscordBot.getInstance().registerModule(twitch_api.ModuleAPI.class);
 
-
         //start bot
         BigDiscordBot.getInstance().startBot();
     }
