@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadFactory;
 
 public class BigDiscordBot {
 
-    private static List<ModuleAPI> registeredModules;
+    private static List<Class<? extends  ModuleAPI>> registeredModules;
     private static ExecutorService mainBotExecutor;
 
 
@@ -31,9 +31,9 @@ public class BigDiscordBot {
     }
 
 
-    public void registerModule(ModuleAPI moduleAPI){registeredModules.add(moduleAPI);}
+    public void registerModule(Class<? extends  ModuleAPI> moduleAPI){registeredModules.add(moduleAPI);}
 
-    public List<ModuleAPI> getRegisteredModules(){return registeredModules;}
+    public List<Class<? extends  ModuleAPI>> getRegisteredModules(){return registeredModules;}
 
     public void startBot(){
         mainBotExecutor.submit(()-> {

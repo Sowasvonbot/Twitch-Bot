@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        BigDiscordBot.getInstance().registerModule(new twitch_api.ModuleAPI());
+        BigDiscordBot.getInstance().registerModule(twitch_api.ModuleAPI.class);
         BigDiscordBot.getInstance().startBot();
 
 

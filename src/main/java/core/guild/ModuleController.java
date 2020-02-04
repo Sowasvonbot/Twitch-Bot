@@ -31,7 +31,7 @@ public class ModuleController {
 
         BigDiscordBot.getInstance().getRegisteredModules().forEach(moduleAPI -> {
             try {
-                Module module = moduleAPI.getClass().getConstructor().newInstance().getModule();
+                Module module = moduleAPI.getConstructor().newInstance().getModule();
                 moduleHolder.addModule(module);
                 logger.info("Loaded module {}", module.getName());
             } catch (NoSuchMethodException noMethod){
