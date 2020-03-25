@@ -149,7 +149,7 @@ public abstract class Output {
             InputStream thumbnail = null;
 
             TextChannel channel = Bot.getInstance().getMyJDA().getTextChannelById(channelID);
-            EmbedBuilder embedBuilder = message.getEmbedBuilder();
+                EmbedBuilder embedBuilder = message.getEmbedBuilder();
             if(message.getPicture() != null) {
                 file = message.getPicture().openStream();
                 embedBuilder.setImage("attachment://picture.jpg");
@@ -165,7 +165,7 @@ public abstract class Output {
 
             else if (currAction == null && thumbnail != null) currAction = channel.sendFile(thumbnail, "thumbnail.jpg");
 
-            else if (currAction != null && thumbnail == null) {return channel.sendMessage(embedBuilder.build()); }
+            else if (currAction == null && thumbnail == null) {return channel.sendMessage(embedBuilder.build()); }
 
             return currAction.embed(embedBuilder.build());
 
